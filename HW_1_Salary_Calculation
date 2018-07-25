@@ -1,0 +1,88 @@
+/*
+Name: SalaryCalculation
+Author: Gerald Hall
+Version: 1.0
+Description: Program to calculate the new salary of employees given an increase percentage
+*/
+
+#include "stdafx.h"
+#include <iostream>
+#include <string>
+#include <iomanip>
+#include <fstream>
+
+int main()
+{
+// declare variables for last name, first name, salary, salary increase percentage, new salary, counter, and a 100 for calculations.
+    std::string lName;
+    std::string fName;
+    double salary;
+    double incPercent;
+    double updatedSalary;
+    int counter = 0;
+    const int divis = 100;
+
+//establish ifstream and ofstream variables
+    std::ifstream inData;
+    std::ofstream outData;
+
+//relates curSalary.text to the ifstream variable
+    inData.open("curSalary.txt");
+
+//relates newSalary.text to the ofstream variable
+    outData.open("newSalary.txt");
+
+//Check if source file can be opened. If not abort.
+    if (inData.fail())
+    {
+        std::cerr << "Can't open input file. Abort. \n";
+        return 1;
+    }
+
+//Check if output file can be created. If not, abort.
+    if (outData.fail())
+    {
+        std::cerr << "Can't create output file. Abort. \n";
+        return 1;
+    }
+    
+//Set formatting on output
+    outData << std::fixed << std::showpoint;
+    outData << std::setprecision(2);
+
+//Loop through curSalary.txt, calculate the new salary, and output to newSalary.txt
+     while (inData >> lName >> fName >> salary >> incPercent)
+    {
+         counter++;
+         updatedSalary = salary + (salary*(incPercent / divis));
+         outData << fName << " " << lName << " " << updatedSalary << std::endl;
+    }
+
+//Displays warning if curSalary.txt is empty, otherwise tells how many records were processed     
+     if (counter == 0) 
+     {
+         std::cout << "Warning: empty input file. Output file created, but it empty.\n";
+     }
+        else 
+            {
+            std::cout << counter << " records processed and saved in \"newSalary.txt\".\n"; 
+            }
+	  inData.close();
+	  outData.close();
+    return 0;
+}
+
+
+　
+
+
+　
+
+
+　
+
+
+　
+
+
+　
